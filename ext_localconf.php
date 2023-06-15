@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') or die();
+defined('TYPO3') or die();
 
 // Add new controller/action
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['switchableControllerActions']['newItems']['News->month']
@@ -10,21 +10,26 @@ $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['switchableControllerActions']['newIt
  * Hooks
  */
 
+// @todo form provider
 // Hide not needed fields in FormEngine
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getSingleFieldClass']['eventnews']
     = \GeorgRinger\Eventnews\Hooks\FormEngineHook::class;
 
+// @todo flexform hook -> event
 // Update flexforms
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][\TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools::class]['flexParsing'][]
     = \GeorgRinger\Eventnews\Hooks\FlexFormHook::class;
 
+// @todo was removed from news
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news'][\GeorgRinger\News\Hooks\PageLayoutView::class]['extensionSummary']['eventnews']
     = \GeorgRinger\Eventnews\Hooks\PageLayoutView::class . '->extensionSummary';
 
+// @todo event from news extension
 // Extend the query
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['Domain/Repository/AbstractDemandedRepository.php']['findDemanded']['eventnews']
     = \GeorgRinger\Eventnews\Hooks\AbstractDemandedRepository::class . '->modify';
 
+// @todo was removed from news
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][\GeorgRinger\Eventnews\Backend\FormDataProvider\EventNewsRowInitializeNew::class] = [
     'depends' => [
         \TYPO3\CMS\Backend\Form\FormDataProvider\DatabaseRowInitializeNew::class,
@@ -41,12 +46,13 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['classes']['Domain/Model/News'][] = 'eventnews';
 $GLOBALS['TYPO3_CONF_VARS']['EXT']['news']['classes']['Controller/NewsController'][] = 'eventnews';
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class)->connect(
-    \GeorgRinger\News\Domain\Service\NewsImportService::class,
-    'postHydrate',
-    \GeorgRinger\Eventnews\Aspect\NewsImportAspect::class,
-    'postHydrate'
-);
+// @todo alternative to dispatch
+//\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class)->connect(
+//    \GeorgRinger\News\Domain\Service\NewsImportService::class,
+//    'postHydrate',
+//    \GeorgRinger\Eventnews\Aspect\NewsImportAspect::class,
+//    'postHydrate'
+//);
 
 // override language files of news
 $overrideModuleLable = (bool)\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class)->get('eventnews', 'overrideAdministrationModuleLabel');
@@ -55,7 +61,7 @@ if ($overrideModuleLable) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['locallangXMLOverride']['de']['EXT:news/Resources/Private/Language/locallang_modadministration.xlf'][] = 'EXT:eventnews/Resources/Private/Language/Overrides/de.locallang_modadministration.xlf';
 }
 
-if (TYPO3_MODE === 'BE') {
+if (TYPO3 === 'BE') {
     $icons = [
         'ext-news-type-event' => 'news_domain_model_news_event.svg',
     ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace GeorgRinger\Eventnews\Aspect;
 
+use GeorgRinger\News\Domain\Model\News;
 /**
  * This file is part of the "eventnews" Extension for TYPO3 CMS.
  *
@@ -15,7 +16,7 @@ class NewsImportAspect
 
     /**
      * @param array $importData
-     * @param \GeorgRinger\News\Domain\Model\News $news
+     * @param News $news
      */
     public function postHydrate(array $importData, $news): void
     {

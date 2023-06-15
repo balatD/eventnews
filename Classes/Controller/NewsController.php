@@ -9,6 +9,9 @@ namespace GeorgRinger\Eventnews\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * Class GeorgRinger\Eventnews\Controller\NewsController
  */
@@ -21,12 +24,12 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController
      *
      * @param \GeorgRinger\Eventnews\Domain\Model\Dto\SearchDemand $search
      * @param array $overwriteDemand
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("search")
      */
+    #[IgnoreValidation(['value' => 'search'])]
     public function monthAction(
         \GeorgRinger\Eventnews\Domain\Model\Dto\SearchDemand $search = null,
         array $overwriteDemand = null
-    )
+    ): ResponseInterface
     {
         $demand = $this->getDemand($search, $overwriteDemand);
         $newsRecordsWithDaySupport = $this->newsRepository->findDemanded($demand);
@@ -67,6 +70,7 @@ class NewsController extends \GeorgRinger\News\Controller\NewsController
 
         $event = $this->eventDispatcher->dispatch(new \GeorgRinger\Eventnews\Event\NewsMonthActionEvent($this, $assignedValues));
         $this->view->assignMultiple($event->getAssignedValues());
+        return $this->htmlResponse();
     }
 
     /**

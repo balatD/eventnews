@@ -8,7 +8,6 @@ namespace GeorgRinger\Eventnews\Hooks;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
 use GeorgRinger\Eventnews\Domain\Model\Dto\Demand;
 use GeorgRinger\News\Domain\Model\News;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -41,14 +40,14 @@ class AbstractDemandedRepository
      *
      * @param Demand $demand
      * @param bool $respectEnableFields
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param QueryInterface $query
      * @param array $constraints
      * @return void
      */
     protected function updateEventConstraints(
         Demand $demand,
         $respectEnableFields,
-        \TYPO3\CMS\Extbase\Persistence\QueryInterface $query,
+        QueryInterface $query,
         array &$constraints
     ) {
         $eventRestriction = $demand->getEventRestriction();
@@ -127,7 +126,7 @@ class AbstractDemandedRepository
      * @param int $end
      * @return array
      */
-    protected function getDateConstraint(\TYPO3\CMS\Extbase\Persistence\QueryInterface $query, $dateField, $begin, $end)
+    protected function getDateConstraint(QueryInterface $query, $dateField, $begin, $end)
     {
         $eventsWithNoEndDate = [
             $query->logicalAnd(

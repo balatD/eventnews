@@ -11,10 +11,12 @@ namespace GeorgRinger\Eventnews\Domain\Model;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Organizer
  */
-class Organizer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Organizer extends AbstractEntity
 {
 
     /**
