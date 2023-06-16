@@ -7,3 +7,9 @@ services:
   GeorgRinger\Eventnews\:
     resource: '../Classes/*'
     exclude: '../Classes/Domain/Model/*'
+
+  GeorgRinger\Eventnews\EventListener\AfterFlexFormDataStructureParsedEventListener:
+    tags: ['event.listener']
+
+  GeorgRinger\Eventnews\EventListener\NewsImportPostHydrateEventListener.php:
+    tags: ['event.listener']
