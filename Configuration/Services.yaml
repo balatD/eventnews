@@ -11,5 +11,5 @@ services:
   GeorgRinger\Eventnews\EventListener\AfterFlexFormDataStructureParsedEventListener:
     tags: ['event.listener']
 
-  GeorgRinger\Eventnews\EventListener\NewsImportPostHydrateEventListener.php:
+  GeorgRinger\Eventnews\EventListener\NewsImportPostHydrateEventListener:
     tags: ['event.listener']
